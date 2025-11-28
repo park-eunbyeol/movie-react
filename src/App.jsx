@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./MovieFlix.css";
 
 const API_KEY = "2164d1ce718f51afd478a3007a3a4e01";
 
@@ -133,6 +134,72 @@ function MovieModal({
               </div>
             </div>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ShareModal 컴포넌트 (간단한 버전)
+function ShareModal({ movie, onClose, onCopyLink, getYouTubeLink }) {
+  if (!movie) return null;
+
+  const youtubeLink = getYouTubeLink(movie.title);
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="close-btn" onClick={onClose}>
+          ×
+        </button>
+
+        <div className="modal-header">
+          <h2>공유하기</h2>
+        </div>
+
+        <div className="modal-body" style={{ textAlign: "center" }}>
+          <p style={{ marginBottom: "20px", fontSize: "1.1rem" }}>
+            <strong>{movie.title}</strong>
+          </p>
+
+          <div
+            style={{
+              background: "#f5f5f5",
+              padding: "15px",
+              borderRadius: "8px",
+              marginBottom: "20px",
+              wordBreak: "break-all",
+              fontSize: "0.9rem",
+              maxHeight: "100px",
+              overflowY: "auto",
+            }}
+          >
+            {youtubeLink}
+          </div>
+
+          <button
+            className="submit-btn"
+            onClick={onCopyLink}
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginBottom: "10px",
+            }}
+          >
+            🔗 링크 복사
+          </button>
+
+          <button
+            className="detail-btn"
+            onClick={onClose}
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginTop: "10px",
+            }}
+          >
+            닫기
+          </button>
         </div>
       </div>
     </div>
@@ -361,7 +428,21 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showFavorites, setShowFavorites] = useState(false);
   const [heroMovie, setHeroMovie] = useState(null);
-  const [currentView, setCurrentView] = useState("home"); // 'home' or 'community'
+  const [currentView, setCurrentView] = useState("home");
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareMovie, setShareMovie] = useState(null);
+
+  const popularSearches = [
+    "아바타",
+    "타이타닉",
+    "어벤져스",
+    "인터스텔라",
+    "기생충",
+    "라라랜드",
+    "노트북",
+    "인셉션",
+  ];
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("favorites") || "[]");
@@ -427,25 +508,27 @@ export default function App() {
     localStorage.setItem("favorites", JSON.stringify(updated));
   };
 
-  const handleShare = async (movie) => {
-    const shareData = {
-      title: movie.title,
-      text: `${movie.title} - 평점: ${movie.vote_average?.toFixed(1)}⭐`,
-      url: `https://www.themoviedb.org/movie/${movie.id}`,
-    };
+  const getYouTubeLink = (title) => {
+    return `https://www.youtube.com/results?search_query=${encodeURIComponent(
+      title + " trailer"
+    )}`;
+  };
 
+  const copyShareLink = async () => {
+    if (!shareMovie) return;
+    const youtubeLink = getYouTubeLink(shareMovie.title);
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(
-          `${shareData.title}\n${shareData.text}\n${shareData.url}`
-        );
-        alert("링크가 클립보드에 복사되었습니다!");
-      }
+      await navigator.clipboard.writeText(youtubeLink);
+      alert("YouTube 링크가 복사되었습니다!");
+      setShowShareModal(false);
     } catch (err) {
-      console.log("공유 에러:", err);
+      console.log("복사 에러:", err);
     }
+  };
+
+  const handleShare = (movie) => {
+    setShareMovie(movie);
+    setShowShareModal(true);
   };
 
   const openMovieDetails = async (movieId) => {
@@ -487,12 +570,15 @@ export default function App() {
     }
   };
 
-  const handleSearch = (e) => {
-    if (!searchQuery.trim()) return;
+  const handleSearch = (query) => {
+    if (!query.trim()) return;
 
     setCurrentView("home");
+    setSearchQuery(query);
+    setShowSearchDropdown(false);
+
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=ko-KR&query=${searchQuery}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=ko-KR&query=${query}`
     )
       .then((res) => res.json())
       .then((data) => setMovies(data.results || []))
@@ -507,16 +593,63 @@ export default function App() {
           <h1>MovieFlix</h1>
         </div>
 
-        <div className="search-bar">
+        <div className="search-bar" style={{ position: "relative" }}>
           <input
             type="text"
             placeholder="영화 검색"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setShowSearchDropdown(e.target.value === "");
+            }}
+            onFocus={() => setShowSearchDropdown(searchQuery === "")}
+            onBlur={() => setTimeout(() => setShowSearchDropdown(false), 200)}
             onKeyPress={(e) => {
-              if (e.key === "Enter") handleSearch(e);
+              if (e.key === "Enter") handleSearch(searchQuery);
             }}
           />
+          {showSearchDropdown && (
+            <div
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                right: 0,
+                background: "#fff",
+                border: "1px solid #ddd",
+                borderRadius: "6px",
+                marginTop: "5px",
+                zIndex: 1000,
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              {popularSearches.map((search, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => handleSearch(search)}
+                  style={{
+                    padding: "10px 15px",
+                    cursor: "pointer",
+                    borderBottom:
+                      idx < popularSearches.length - 1
+                        ? "1px solid #eee"
+                        : "none",
+                    fontSize: "0.9rem",
+                    color: "#333",
+                    transition: "background-color 0.2s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.target.style.backgroundColor = "#f5f5f5")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.target.style.backgroundColor = "transparent")
+                  }
+                >
+                  🔍 {search}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="header-buttons">
@@ -629,6 +762,15 @@ export default function App() {
           onFavorite={toggleFavorite}
           isFavorite={favorites.some((m) => m.id === selectedMovie.id)}
           onShare={handleShare}
+        />
+      )}
+
+      {showShareModal && (
+        <ShareModal
+          movie={shareMovie}
+          onClose={() => setShowShareModal(false)}
+          onCopyLink={copyShareLink}
+          getYouTubeLink={getYouTubeLink}
         />
       )}
     </div>
