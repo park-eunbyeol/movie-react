@@ -448,12 +448,17 @@
   background-color: #ff3f3f;
   color: white;
   margin-top: auto;
+  outline: none;
 }
 
 .detail-btn:hover {
   background-color: #e63636;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 63, 63, 0.3);
+}
+
+.detail-btn:focus {
+  outline: none;
 }
 
 /* -------------------- 모달 -------------------- */
