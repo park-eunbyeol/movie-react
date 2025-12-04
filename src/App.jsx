@@ -17,6 +17,7 @@ function MovieCard({ movie, onClick, onFavorite, isFavorite, onShare }) {
           <div className="no-poster"></div>
         )}
       </div>
+
       <div className="movie-info">
         <h3>{movie.title || "제목 없음"}</h3>
         <div className="info-container">
