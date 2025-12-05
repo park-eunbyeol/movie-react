@@ -853,25 +853,27 @@ export default function App() {
             </div>
           )}
 
-          {/* 탭 */}
-          <div className="tab-menu">
-            {["popular", "latest", "action", "drama", "comedy"].map((tab) => (
-              <button
-                key={tab}
-                className={`tab-btn ${activeTab === tab ? "active" : ""}`}
-                onClick={() => {
-                  setActiveTab(tab);
-                  setShowFavorites(false);
-                }}
-              >
-                {tab === "popular"
-                  ? "popular"
-                  : tab === "latest"
-                  ? "latest"
-                  : tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
-          </div>
+          {/* 🟦 탭 - showFavorites가 false일 때만 표시 */}
+          {!showFavorites && (
+            <div className="tab-menu">
+              {["popular", "latest", "action", "drama", "comedy"].map((tab) => (
+                <button
+                  key={tab}
+                  className={`tab-btn ${activeTab === tab ? "active" : ""}`}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setShowFavorites(false);
+                  }}
+                >
+                  {tab === "popular"
+                    ? "popular"
+                    : tab === "latest"
+                    ? "latest"
+                    : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* 영화 리스트 */}
           <div className="movie-list">
