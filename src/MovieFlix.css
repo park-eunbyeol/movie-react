@@ -3,6 +3,12 @@
   min-height: 100vh;
   background-color: #f9fafb;
   font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.movieflix-container > * {
+  flex: 1;
 }
 
 /* -------------------- 헤더 -------------------- */
@@ -979,6 +985,115 @@
 
 .reply-input button:hover {
   background: #0056b3;
+}
+
+/* -------------------- 푸터 -------------------- */
+.movieflix-footer {
+  background-color: #111;
+  color: #888;
+  padding: 3rem 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid #333;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+  color: #888;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #e50914;
+}
+
+.footer-section.social {
+  display: flex;
+  flex-direction: column;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.social-links a {
+  color: #888;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #333;
+  border-radius: 50%;
+}
+
+.social-links a:hover {
+  color: #e50914;
+  border-color: #e50914;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.footer-copyright {
+  color: #666;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #e50914;
 }
 
 /* -------------------- 반응형 디자인 -------------------- */

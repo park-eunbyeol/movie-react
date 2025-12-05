@@ -419,6 +419,124 @@ function Community() {
   );
 }
 
+// Footer 컴포넌트
+function Footer() {
+  return (
+    <footer className="movieflix-footer">
+      <div className="footer-content">
+        <div className="footer-section">
+          <h3>카테고리</h3>
+          <ul>
+            <li>
+              <a href="#popular">인기 영화</a>
+            </li>
+            <li>
+              <a href="#latest">최신 영화</a>
+            </li>
+            <li>
+              <a href="#action">액션</a>
+            </li>
+            <li>
+              <a href="#drama">드라마</a>
+            </li>
+            <li>
+              <a href="#comedy">코미디</a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="footer-section">
+          <h3>안내</h3>
+          <ul>
+            <li>
+              <a href="#about">소개</a>
+            </li>
+            <li>
+              <a href="#contact">문의</a>
+            </li>
+            <li>
+              <a href="#faq">FAQ</a>
+            </li>
+            <li>
+              <a href="#privacy">개인정보처리방침</a>
+            </li>
+            <li>
+              <a href="#terms">이용약관</a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="footer-section">
+          <h3>고객 지원</h3>
+          <ul>
+            <li>
+              <a href="#help">도움말</a>
+            </li>
+            <li>
+              <a href="#feedback">피드백</a>
+            </li>
+            <li>
+              <a href="#report">신고</a>
+            </li>
+            <li>
+              <a href="#partnership">협력 제안</a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="footer-section social">
+          <h3>팔로우</h3>
+          <div className="social-links">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Facebook"
+            >
+              f
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Twitter"
+            >
+              𝕏
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Instagram"
+            >
+              📷
+            </a>
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="YouTube"
+            >
+              ▶
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="footer-bottom">
+        <div className="footer-copyright">
+          © 2024 MovieFlix. All rights reserved.
+        </div>
+        <div className="footer-links">
+          <a href="#privacy">개인정보</a>
+          <a href="#terms">이용약관</a>
+          <a href="#cookies">쿠키 정책</a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 // Main App
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -774,6 +892,8 @@ export default function App() {
           getYouTubeLink={getYouTubeLink}
         />
       )}
+
+      <Footer />
     </div>
   );
 }
