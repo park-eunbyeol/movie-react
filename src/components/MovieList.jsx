@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import MovieCard from "./MovieCard";
+
 import "./MovieList.css";
+import MovieCard from "./Moviecard";
 
 export default function MovieList({
   movies,
@@ -27,6 +28,30 @@ export default function MovieList({
       console.log("복사 에러:", err);
     }
   };
+
+  // 🟦 즐겨찾기 탭 필터링
+  if (activeTab === "favorites") {
+    return (
+      <div className="movie-list">
+        {favorites?.length > 0 ? (
+          favorites.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              onClick={() => onMovieClick(movie.id)}
+              onFavorite={onFavorite}
+              isFavorite={true}
+              onShare={() => handleShare(movie)}
+            />
+          ))
+        ) : (
+          <p style={{ textAlign: "center", padding: "20px" }}>
+            즐겨찾기한 영화가 없습니다.
+          </p>
+        )}
+      </div>
+    );
+  }
 
   if (activeTab === "community") {
     // 기존 커뮤니티 코드 그대로
@@ -108,8 +133,7 @@ export default function MovieList({
 
     return (
       <div className="community-container">
-        {/* 커뮤니티 기존 코드 그대로 */}
-        ...
+        {/* 기존 커뮤니티 코드 그대로 */}
       </div>
     );
   }
