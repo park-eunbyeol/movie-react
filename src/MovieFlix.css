@@ -1204,6 +1204,11 @@
 }
 
 @media (max-width: 480px) {
+  /* 푸터 모바일 숨김 */
+  .movieflix-footer {
+    display: none;
+  }
+
   /* 헤더 모바일 */
   .movieflix-header {
     padding: 12px 15px;
