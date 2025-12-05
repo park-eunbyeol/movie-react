@@ -533,6 +533,22 @@ function Footer() {
           <a href="#cookies">쿠키 정책</a>
         </div>
       </div>
+
+      {/* 모바일 네비게이션 바 */}
+      <div className="mobile-nav">
+        <a href="#home" className="nav-item">
+          <span className="nav-icon">🏠</span>
+        </a>
+        <a href="#search" className="nav-item">
+          <span className="nav-icon">🔍</span>
+        </a>
+        <a href="#movies" className="nav-item">
+          <span className="nav-icon">🎬</span>
+        </a>
+        <a href="#profile" className="nav-item">
+          <span className="nav-icon">👤</span>
+        </a>
+      </div>
     </footer>
   );
 }

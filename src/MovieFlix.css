@@ -1204,9 +1204,69 @@
 }
 
 @media (max-width: 480px) {
-  /* 푸터 모바일 숨김 */
+  /* 푸터 모바일 네비게이션 바 */
   .movieflix-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    z-index: 500;
+  }
+
+  .footer-content {
     display: none;
+  }
+
+  .footer-bottom {
+    display: none;
+  }
+
+  /* 컨테이너에 푸터 공간 확보 */
+  .movieflix-container {
+    padding-bottom: 60px;
+  }
+
+  /* 네비게이션 항목 스타일 */
+  .movieflix-footer::before {
+    content: "";
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-section {
+    display: none;
+  }
+
+  .footer-section:nth-child(1)::before {
+    content: "🏠";
+    font-size: 1.5rem;
+  }
+
+  .footer-section:nth-child(2)::before {
+    content: "🔍";
+    font-size: 1.5rem;
+  }
+
+  .footer-section:nth-child(3)::before {
+    content: "🎬";
+    font-size: 1.5rem;
+  }
+
+  .footer-section:nth-child(4)::before {
+    content: "👤";
+    font-size: 1.5rem;
   }
 
   /* 헤더 모바일 */
